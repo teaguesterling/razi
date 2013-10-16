@@ -352,3 +352,14 @@ class functions:
         """Returns true if the Dice similarity between two fingerprints is higher than the currently set threshold value.
         """
         pass
+
+
+    class bfp_from_text(DialectSpecificFunction):
+        """Returns a :class:`~razi.chemtypes.BitFingerprint` from a string-encoded bit fingerprint
+        """
+
+
+    class bfp_to(DialectSpecificFunction):
+        """Returns a :class:`str` from a :class:`~razi.chemtypes.BitFingerprint`
+        """
+

@@ -234,6 +234,10 @@ class PostgresRDKitDialect(ChemicalDialect):
         functions.dice_similarity: 'dice_sml',
         functions.dice_similar: pgrdkit_functions._dice,
 
+        # fingerprint i/o
+        functions.bfp_from_text: 'bfp_from_binary_text'.
+        functions.bfp_to_text: 'bfp_to_binary_text',
+
         #pgrdkit_functions.func2 : 'Func2',
         }
 
@@ -272,3 +276,4 @@ class PostgresRDKitDialect(ChemicalDialect):
             bind.execute("CREATE INDEX \"idx_%s_%s\" ON \"%s\".\"%s\" USING GIST (%s)" %
                          (table.name, column.name, (table.schema or 'public'),
                           table.name, column.name))
+

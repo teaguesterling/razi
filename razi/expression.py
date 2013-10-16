@@ -83,6 +83,34 @@ class BitFingerprintElement(ChemElement):
     pass
 
 
+class TxtBitFingerprintElement(BitFingerprintElement, TxtChemElement):
+    """Represents a bit fingerprint expressed within application code
+    (i.e. a byte array)
+    """
+
+    def __init__(self, desc):
+        TxtChemElement.__init__(self, self.to_hex(desc))
+
+
+    @classmethod
+    def to_hex(cls, value):
+        if hasattr(value, 'to_hexstring'):
+            return value.to_hexstring()
+        elif hasattr(value, 'ToBitString') and hasattr(value, 'GetNumBits'):
+            int_value = int(value.ToBitString(), 2)
+            num_bits = value.GetNumBits()
+            return cls.hex_padded(int_value, num_bits)
+        elif isinstance(value, tuple) and map(type, value) == (int, int):
+            return cls.hex_padded(*value)
+        else:
+            return str(value)
+
+    @staticmethod
+    def hex_padded(value, num_bits):
+        hex_len = num_bits / 4
+        return "\\x{value:0{len}x}".format(value=value, len=hex_len)
+
+
 class PersistentBitFingerprintElement(BitFingerprintElement):
     """Represents a BitFingerprint value loaded from the database."""
 
